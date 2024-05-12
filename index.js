@@ -11,6 +11,7 @@ const port = 3000;
 //     res.send('Hello Sourabh');
 // })
 
+app.use(express.json());
 app.use('/api/auth',require('./routes/auth'))
 app.use('/api/notes',require('./routes/notes'))
 
