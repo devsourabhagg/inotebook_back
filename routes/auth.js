@@ -4,6 +4,7 @@ const User = require('../models/User');
 const { query, validationResult, body } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const fetchuser = require('../middleware/fetchuser');
 
 const JWT_SECRET = 'f464495afd6ef3e42b642420cad6ba6c';
 
@@ -104,4 +105,21 @@ router.post('/login',[
 
 })
 
-module.exports = router
+
+//Route 3: Get logged in user detail
+router.get('/userdetails',fetchuser, async(req,res) => {
+
+try{
+   userId = req.user.id;
+   console.log(`this is the value of UserId ${userId}`);
+   const user = await User.findById(userId);
+   res.send(user);
+
+}
+catch(e){
+    console.log(`Error in userDetails Api : ${e.message}`);
+}
+
+})
+
+module.exports = router;
